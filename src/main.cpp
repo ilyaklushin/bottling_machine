@@ -78,7 +78,7 @@ void chst_gui(){
 
 void watchdog(){
     for(;;){
-    delay(25);
+    delay(5);
     digitalWrite(watchdogTxPin, digitalRead(watchdogRxPin));
     }
 }
