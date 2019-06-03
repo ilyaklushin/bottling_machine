@@ -26,7 +26,7 @@ void renew(){
 
 void filtration (){
     sensWater=0;
-    digitalWrite(CoinCounterPwrPin, !minWater);
+    digitalWrite(CoinCounterPwrPin, minWater);
     if (minWater==true or botling==true) {noWater=false; noWaterWait();}
     else {noWater=true;}
     if (minWater==true){sensWater+=100;}
@@ -88,6 +88,14 @@ int main(int argc, char* argv[]){
     std::cout << "Bottling vending machine controller v. " << prog_version << std::endl;
     std::cout << "Initializing" << std::endl;
     wiringPiSetup ();
+
+    std::cout << "WatchDog Initializing" << std::endl;
+    std::thread twatchdog(watchdog);
+    pinMode (watchdogRxPin, INPUT);
+    pinMode (watchdogTxPin, OUTPUT);
+    delay(50);
+
+    mcp23017Setup (100, 0x20);
     pinMode (minWaterPin, INPUT);
     pinMode (midWaterPin, INPUT);
     pinMode (maxWaterPin, INPUT);
@@ -97,8 +105,7 @@ int main(int argc, char* argv[]){
     pullUpDnControl (maxWaterPin, PUD_DOWN);
     pullUpDnControl (btnPin, PUD_UP);
 
-    pinMode (watchdogRxPin, INPUT);
-    pinMode (watchdogTxPin, OUTPUT);
+
 
     pinMode (relayFiltrationPin, OUTPUT);
     pinMode (relayPumpPin, OUTPUT);
@@ -118,7 +125,7 @@ int main(int argc, char* argv[]){
 
     std::thread trun_gui(run_gui, &action, &displayWaterCounter, &displayCoinCounter);
     std::thread tchst_gui(chst_gui);
-    std::thread twatchdog(watchdog);
+
 
     //inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();
 

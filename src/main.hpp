@@ -5,6 +5,7 @@
 #include <thread> // std::thread
 #include <string>
 #include <wiringPi.h>  // Wiring Library for Raspberry Pi
+#include <mcp23017.h>  // MCP23017 I2C GPIO Externder library
 #include "coincounter.hpp"
 #include "bottling.hpp"
 
@@ -22,7 +23,7 @@
 
 
 //Values
-const std::string prog_version = "3.00";
+const std::string prog_version = "3.03";
 
 bool minWater = false;
 bool midWater = false;
@@ -50,14 +51,14 @@ bool gui_thanks=false;
 #define midWaterPin         24
 #define maxWaterPin         23
 
-//#define btnPin              27
-#define btnPin              9
+#define btnPin              103
+//#define btnPin              9
 
-#define relayFiltrationPin  29
-#define relayPumpPin        28
+#define relayFiltrationPin  106
+#define relayPumpPin        107
 
-#define watchdogRxPin       4
-#define watchdogTxPin       1
+#define watchdogRxPin       1
+#define watchdogTxPin       4
 
 
 #endif // MAIN_HPP_INCLUDED

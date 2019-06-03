@@ -5,6 +5,6 @@
  volatile float inputCoinCounter = 0.0000;
  volatile int sessioninputCoinCounter = 0;
 #define inCoinCounterPin    22
-#define CoinCounterPwrPin   8
+#define CoinCounterPwrPin   112
 
 #endif // COINCOUNTER_HPP_INCLUDED
