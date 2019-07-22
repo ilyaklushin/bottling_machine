@@ -1,6 +1,5 @@
 #include "db.hpp"
 
-
 void db_bottling_add(long int data, int data2){
     sqlite3 *db;
     char *zErrMsg = 0;
@@ -93,6 +92,7 @@ size_t db_send_post_writeFunction(void *ptr, size_t size, size_t nmemb, std::str
     data->append((char*) ptr, size * nmemb);
     return size * nmemb;
 }
+
 std::string db_send_post(std::string &strr){
     //char strr[]="name=daniel&project=curl";
     std::string readBuffer;

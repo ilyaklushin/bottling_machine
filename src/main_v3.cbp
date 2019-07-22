@@ -60,6 +60,8 @@
 		<Unit filename="db.hpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="exchange.cpp" />
+		<Unit filename="exchange.hpp" />
 		<Unit filename="include/GUI.h" />
 		<Unit filename="include/box_run.h" />
 		<Unit filename="include/cRun.h" />
