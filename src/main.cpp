@@ -3,6 +3,65 @@
 #include "coincounter.cpp"
 #include "bottling.cpp"
 
+using namespace libconfig;
+
+auto read_config(){
+    Config cfg;
+    try{
+        cfg.readFile("bottling_machine.cfg");
+    }
+    catch(const FileIOException &fioex){
+        std::cerr << "I/O error while reading file." << std::endl;
+        return(EXIT_FAILURE);
+    }
+    catch(const ParseException &pex){
+        std::cerr << "Parse error at " << pex.getFile() << ":" << pex.getLine() << " - " << pex.getError() << std::endl;
+        return(EXIT_FAILURE);
+    }
+    std::cout << "Config found" << std::endl;
+    try{
+        machine_id = cfg.lookup("machine_id");
+        std::cout << "Store machine id: " << machine_id << std::endl;
+    }
+    catch(const SettingNotFoundException &nfex){
+        std::cerr << "No 'machine_id' setting in configuration file." << std::endl;
+    }
+    try{
+        auth_key = cfg.lookup("auth_key").c_str();
+        std::cout << "Store auth_key: " << auth_key << std::endl;
+    }
+    catch(const SettingNotFoundException &nfex){
+        std::cerr << "No 'auth_key' setting in configuration file." << std::endl;
+    }
+    try{
+        WaterCost = cfg.lookup("water_cost");
+        std::cout << "Store water cost: " << WaterCost << std::endl;
+    }
+    catch(const SettingNotFoundException &nfex){
+        std::cerr << "No 'water_cost' setting in configuration file." << std::endl;
+    }
+    try{
+        PulsePerLiter = cfg.lookup("pulse_per_liter");
+        std::cout << "Store pulse per liter: " << PulsePerLiter << std::endl;
+    }
+    catch(const SettingNotFoundException &nfex){
+        std::cerr << "No 'pulse_per_liter' setting in configuration file." << std::endl;
+    }
+    try{
+        api_address = cfg.lookup("api_address").c_str();
+        std::cout << "Store api address: " << api_address << std::endl;
+    }
+    catch(const SettingNotFoundException &nfex){
+        std::cerr << "No 'api address' setting in configuration file." << std::endl;
+    }
+    try{
+        db_name = cfg.lookup("db_name").c_str();
+        std::cout << "Store db name: " << db_name << std::endl;
+    }
+    catch(const SettingNotFoundException &nfex){
+        std::cerr << "No 'db_name' setting in configuration file." << std::endl;
+    }
+}
 
 void noWaterWait(){
     if (lastnoWater==false && noWater==true) {
@@ -88,6 +147,7 @@ int main(int argc, char* argv[]){
     std::cout << "Bottling vending machine controller v. " << prog_version << std::endl;
     std::cout << "Initializing" << std::endl;
     wiringPiSetup ();
+    if (read_config()==EXIT_FAILURE){return(EXIT_FAILURE);}
 
     std::cout << "WatchDog Initializing" << std::endl;
     std::thread twatchdog(watchdog);

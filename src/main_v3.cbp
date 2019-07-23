@@ -39,9 +39,10 @@
 			<Add option="-pthread" />
 			<Add option="-Wall" />
 			<Add option="-lwiringPi" />
-			<Add option="-lsqlite3" />
-			<Add option="-lcurl" />
+			<Add option="`pkg-config --libs sqlite3`" />
+			<Add option="`pkg-config --libs libcurl`" />
 			<Add option="`pkg-config --libs gtkmm-3.0`" />
+			<Add option="`pkg-config --libs libconfig++`" />
 		</Linker>
 		<Unit filename="bottling.cpp">
 			<Option compile="0" />

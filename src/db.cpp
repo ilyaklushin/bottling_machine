@@ -54,7 +54,7 @@ void db_add_bottling(float volume, int coins, unsigned int duration, unsigned in
 
     std::string db_execstr;
     db_execstr = "INSERT INTO HISTORY (action,data) VALUES ('bottling', '"+ jarr.dump() +"');";
-    db_query("test.db", db_execstr, NULL, 0);
+    db_query((char *)db_name.c_str(), db_execstr, NULL, 0);
 }
 
 void db_add_filtration(bool minS, bool midS, bool maxS){
@@ -66,7 +66,7 @@ void db_add_filtration(bool minS, bool midS, bool maxS){
 
     std::string db_execstr;
     db_execstr = "INSERT INTO HISTORY (action, data) VALUES ('tank', '"+ jarr.dump() +"');";
-    db_query("test.db", db_execstr, NULL, 0);
+    db_query((char *)db_name.c_str(), db_execstr, NULL, 0);
 }
 
 size_t db_send_post_writeFunction(void *ptr, size_t size, size_t nmemb, std::string* data){
@@ -84,7 +84,7 @@ std::string db_send_post(std::string &strr, auto server){
 
     curl = curl_easy_init();
     if(curl){
-        curl_easy_setopt(curl, CURLOPT_URL, server);
+        curl_easy_setopt(curl, CURLOPT_URL, server.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, db_send_post_writeFunction);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
 
@@ -116,9 +116,9 @@ static int callback_fetchrow(void *xdata, int argc, char **argv, char **azColNam
     std::string action = argv[1];
     std::string data = argv[2];
     std::cout << action << data << std::endl;
-    std::string dda = "action="+action+"&data="+data;
+    std::string dda = "id="+std::to_string(machine_id)+"&pass="+auth_key+"&action="+action+"&data="+data;
     std::string *ptr_xdata = (std::string *)xdata;
-    *ptr_xdata=db_send_post(dda, "https://water.ufmc.xyz/test.php");
+    *ptr_xdata=db_send_post(dda, api_address);
     return 0;
 }
 
@@ -138,16 +138,16 @@ static int callback_lexists(void *data, int argc, char **argv, char **azColName)
 void db_send(){
     bool lexists = false;
     for(;;){
-        db_query("test.db", std::string("SELECT EXISTS (SELECT * FROM HISTORY LIMIT 1)"), callback_lexists, &lexists);
+        db_query((char *)db_name.c_str(), std::string("SELECT EXISTS (SELECT * FROM HISTORY LIMIT 1)"), callback_lexists, &lexists);
         if (lexists){
             std::cout << "lex:" << lexists << std::endl;
             std::string curlbuff;
             for (;;){
-                db_query("test.db", std::string("SELECT * FROM HISTORY LIMIT 1"), callback_fetchrow, &curlbuff);
+                db_query((char *)db_name.c_str(), std::string("SELECT * FROM HISTORY LIMIT 1"), callback_fetchrow, &curlbuff);
                 std::cout << curlbuff << std::endl;
                 if (curlbuff==std::string("ok")){
                     std::cout << "HTTPS ok" << std::endl;
-                    db_query("test.db", std::string("DELETE FROM HISTORY LIMIT 1"), NULL, 0);
+                    db_query((char *)db_name.c_str(), std::string("DELETE FROM HISTORY LIMIT 1"), NULL, 0);
                     break;
                 }
                 else {

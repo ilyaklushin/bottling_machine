@@ -4,6 +4,7 @@
 #include <iostream> // std::cout, std::fixed
 #include <thread> // std::thread
 #include <string>
+#include <libconfig.h++> // Library for processing configuration files
 #include <wiringPi.h>  // Wiring Library for Raspberry Pi
 #include <mcp23017.h>  // MCP23017 I2C GPIO Externder library
 #include "coincounter.hpp"
@@ -24,6 +25,11 @@
 
 //Values
 const std::string prog_version = "3.03";
+unsigned int machine_id = 0;
+std::string auth_key = "";
+std::string api_address = "";
+std::string db_name;
+
 
 bool minWater = false;
 bool midWater = false;
