@@ -1,40 +1,5 @@
 #include "db.hpp"
 
-void db_bottling_add(long int data, int data2){
-    sqlite3 *db;
-    char *zErrMsg = 0;
-    int db_conn_stat;
-    char *sql = "";
-    int data_time;
-    std::string db_execstr;
-    data_time = std::time(nullptr);
-    db_execstr = "INSERT INTO HISTORY (action,data,data2,time) VALUES (2, " + std::string(std::to_string(data)) + ", " + std::string(std::to_string(data2)) + ", " + std::string(std::to_string(data_time)) + std::string(" );");
-    std::cout<< db_execstr << std::endl;
-    /* Open database */
-    db_conn_stat = sqlite3_open("test.db", &db);
-
-    if( db_conn_stat ) {
-        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-
-    } else {
-        fprintf(stdout, "Opened database successfully\n");
-    }
-
-   /* Create SQL statement */
-   //strcpy(sql, rc4.c_str());
-
-   /* Execute SQL statement */
-    db_conn_stat = sqlite3_exec(db, db_execstr.c_str(), NULL, 0, &zErrMsg);
-
-   if( db_conn_stat != SQLITE_OK ){
-   fprintf(stderr, "SQL error: %s\n", zErrMsg);
-      sqlite3_free(zErrMsg);
-   } else {
-      fprintf(stdout, "Table created successfully\n");
-   }
-   sqlite3_close(db);
-}
-
 bool db_query(char *db_name, std::string db_execstr, int (*callback)(void*,int,char**,char**), void *data){
     if (busydb==true){
         for(;;){
@@ -80,11 +45,27 @@ bool db_query(char *db_name, std::string db_execstr, int (*callback)(void*,int,c
     }
 }
 
-void db_filtration_add(int data){
-    int data_time;
+void db_add_bottling(float volume, int coins, unsigned int duration, unsigned int timestamp){
+    json jarr;
+    jarr["volume"] = volume;
+    jarr["coins"] =  coins;
+    jarr["duration"] = duration;
+    jarr["time"] = timestamp;
+
     std::string db_execstr;
-    data_time = std::time(nullptr);
-    db_execstr = "INSERT INTO HISTORY (action,data,data2,time) VALUES (1, " + std::string(std::to_string(data)) + ", 0, " + std::string(std::to_string(data_time)) + std::string(" );");
+    db_execstr = "INSERT INTO HISTORY (action,data) VALUES ('bottling', '"+ jarr.dump() +"');";
+    db_query("test.db", db_execstr, NULL, 0);
+}
+
+void db_add_filtration(bool minS, bool midS, bool maxS){
+    json jarr;
+    jarr["min"]=minS;
+    jarr["mid"]=midS;
+    jarr["max"]=maxS;
+    jarr["time"]=std::time(nullptr);
+
+    std::string db_execstr;
+    db_execstr = "INSERT INTO HISTORY (action, data) VALUES ('tank', '"+ jarr.dump() +"');";
     db_query("test.db", db_execstr, NULL, 0);
 }
 
@@ -93,7 +74,7 @@ size_t db_send_post_writeFunction(void *ptr, size_t size, size_t nmemb, std::str
     return size * nmemb;
 }
 
-std::string db_send_post(std::string &strr){
+std::string db_send_post(std::string &strr, auto server){
     //char strr[]="name=daniel&project=curl";
     std::string readBuffer;
     CURL *curl;
@@ -103,7 +84,7 @@ std::string db_send_post(std::string &strr){
 
     curl = curl_easy_init();
     if(curl){
-        curl_easy_setopt(curl, CURLOPT_URL, "https://water.ufmc.xyz/test.php");
+        curl_easy_setopt(curl, CURLOPT_URL, server);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, db_send_post_writeFunction);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
 
@@ -134,12 +115,10 @@ std::string db_send_post(std::string &strr){
 static int callback_fetchrow(void *xdata, int argc, char **argv, char **azColName){
     std::string action = argv[1];
     std::string data = argv[2];
-    std::string data2 = argv[3];
-    std::string time = argv[4];
-    std::cout << action << data << data2 << time << std::endl;
-    std::string dda = "action="+action+"&data="+data+"&data2="+data2+"&time="+time+"&ctime="+std::string(std::to_string(std::time(nullptr)));
+    std::cout << action << data << std::endl;
+    std::string dda = "action="+action+"&data="+data;
     std::string *ptr_xdata = (std::string *)xdata;
-    *ptr_xdata=db_send_post(dda);
+    *ptr_xdata=db_send_post(dda, "https://water.ufmc.xyz/test.php");
     return 0;
 }
 

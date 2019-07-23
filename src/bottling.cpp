@@ -6,18 +6,21 @@
 
   void bottling_reset(){
       gui_thanks=true;
-      db_bottling_add(sessionWaterCount, sessioninputCoinCounter);
+      unsigned int sessionTimeStop=std::time(nullptr);
+      db_add_bottling(float(sessionWaterCount)/PulsePerLiter, sessioninputCoinCounter, sessionTimeStop-sessionTimeStart, sessionTimeStop);
       spill=false;
       usebtn=false;
       targetWaterCount=0;
       inputCoinCounter=0;
       sessioninputCoinCounter=0;
       botling=false;
+      lastbotling=false;
 }
 
 void bottling(){
     while (inputCoinCounter > 0 && usenoWater==false){
         botling = true;
+        if (lastbotling==false){ sessionTimeStart=std::time(nullptr); lastbotling=true;}
         outputWaterCounter = 0;
         std::stringstream displayCoinCounter_stream;
         displayCoinCounter_stream << std::fixed << std::setprecision(0) << inputCoinCounter;
@@ -34,7 +37,7 @@ void bottling(){
             else{
                 bottling_reset();
             }
-            //outputWaterCounter+=5;
+            //outputWaterCounter+=5; //debug
             targetWaterCount-=outputWaterCounter;
             sessionWaterCount+=outputWaterCounter;
             std::stringstream displayCoinCounter_stream;

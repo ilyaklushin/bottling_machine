@@ -34,7 +34,7 @@ void filtration (){
     else {sensWater+=10;}
     if (maxWater==true) {digitalWrite(relayFiltrationPin, 0); sensWater+=1;}
     if (sensWater!=lastsensWater){
-        db_filtration_add(sensWater);
+        db_add_filtration(minWater, midWater, maxWater);
     }
     lastsensWater=sensWater;
 
@@ -127,7 +127,7 @@ int main(int argc, char* argv[]){
     std::thread tchst_gui(chst_gui);
 
 
-    //inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();
+    //inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter();inCoinCounter(); //debug
 
     for (;;){
         std::thread tfiltration(filtration);

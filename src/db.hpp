@@ -4,7 +4,10 @@
 #include <sqlite3.h>
 #include <curl/curl.h>
 #include <unistd.h>
+#include "json/single_include/nlohmann/json.hpp"
+
 bool busydb=false;
+using json = nlohmann::json;
 
 #include "db.cpp"
 

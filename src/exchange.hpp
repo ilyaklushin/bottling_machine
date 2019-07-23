@@ -3,8 +3,9 @@
 
 #include <curl/curl.h>
 #include <unistd.h>
+
 //bool busydb=false;
 
-#include "db.cpp"
+#include "exchange.cpp"
 
 #endif // EXCHANGE_HPP_INCLUDED
