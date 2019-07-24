@@ -25,7 +25,7 @@
 
 //Values
 const std::string prog_version = "3.03";
-unsigned int machine_id = 0;
+int machine_id = 0;
 std::string auth_key = "";
 std::string api_address = "";
 std::string db_name;

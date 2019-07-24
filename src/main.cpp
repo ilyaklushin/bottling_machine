@@ -64,6 +64,42 @@ auto read_config(){
     }
 }
 
+auto write_config(){
+    Config cfg;
+    try{
+        cfg.readFile("bottling_machine.cfg");
+    }
+    catch(const FileIOException &fioex){
+        std::cerr << "I/O error while reading file." << std::endl;
+        return(EXIT_FAILURE);
+    }
+    catch(const ParseException &pex){
+        std::cerr << "Parse error at " << pex.getFile() << ":" << pex.getLine() << " - " << pex.getError() << std::endl;
+        return(EXIT_FAILURE);
+    }
+    try{
+        Setting &l_machine_id = cfg.lookup("machine_id");
+        Setting &l_auth_key = cfg.lookup("auth_key");
+        Setting &l_WaterCost = cfg.lookup("water_cost");
+        Setting &l_PulsePerLiter = cfg.lookup("pulse_per_liter");
+        Setting &l_api_address = cfg.lookup("api_address");
+        Setting &l_db_name = cfg.lookup("db_name");
+
+        l_machine_id = machine_id;
+        l_auth_key = auth_key;
+        l_WaterCost = WaterCost;
+        l_PulsePerLiter = PulsePerLiter;
+        l_api_address = api_address;
+        l_db_name = db_name;
+
+        cfg.writeFile("bottling_machine.cfg");
+    }
+    catch(const SettingNotFoundException &nfex){
+        std::cerr << "Some settings not found in configuration file, while trying write configuration file." << std::endl;
+        return 0;
+    }
+}
+
 void noWaterWait(){
     if (lastnoWater==false && noWater==true) {
 
