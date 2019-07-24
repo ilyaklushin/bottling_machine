@@ -54,6 +54,10 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="coincounter.hpp" />
+		<Unit filename="cron.cpp">
+			<Option compile="0" />
+		</Unit>
+		<Unit filename="cron.hpp" />
 		<Unit filename="db.cpp">
 			<Option compile="0" />
 			<Option target="&lt;{~None~}&gt;" />
@@ -61,8 +65,6 @@
 		<Unit filename="db.hpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="exchange.cpp" />
-		<Unit filename="exchange.hpp" />
 		<Unit filename="include/GUI.h" />
 		<Unit filename="include/box_run.h" />
 		<Unit filename="include/cRun.h" />

@@ -1,5 +1,6 @@
 #include "main.hpp"
 #include "db.hpp"
+#include "cron.hpp"
 #include "coincounter.cpp"
 #include "bottling.cpp"
 
