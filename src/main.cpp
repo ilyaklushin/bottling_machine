@@ -64,7 +64,7 @@ auto read_config(){
     }
 }
 
-auto write_config(){
+int write_config(){
     Config cfg;
     try{
         cfg.readFile("bottling_machine.cfg");

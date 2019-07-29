@@ -3,7 +3,7 @@
 
 #include <cmath>
  volatile float inputCoinCounter = 0.0000;
- volatile int sessioninputCoinCounter = 0;
+ volatile float sessioninputCoinCounter = 0.0000;
 #define inCoinCounterPin    22
 #define CoinCounterPwrPin   112
 

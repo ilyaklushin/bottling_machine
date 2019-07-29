@@ -7,6 +7,8 @@
 //bool busydb=false;
 using json = nlohmann::json;
 bool renew_cron=false;
+extern int write_config();
+extern void addCoins(float coins);
 
 #include "cron.cpp"
 

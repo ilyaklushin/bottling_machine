@@ -160,6 +160,9 @@ void db_send(){
                         break;
                     }
                     renew_cron=jrarr["renew"];
+                    if (renew_cron){
+                        fetch_cron();
+                    }
                 }
                 else { sleep(5);}
             }
