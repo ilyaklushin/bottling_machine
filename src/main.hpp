@@ -63,8 +63,9 @@ bool gui_thanks=false;
 #define relayFiltrationPin  106
 #define relayPumpPin        107
 
+#define solenoidLockPin     100
+
 #define watchdogRxPin       1
 #define watchdogTxPin       4
-
 
 #endif // MAIN_HPP_INCLUDED

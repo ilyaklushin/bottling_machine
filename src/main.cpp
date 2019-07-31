@@ -101,6 +101,12 @@ int write_config(){
     }
 }
 
+void openSolenoidLock(){
+    digitalWrite(solenoidLockPin, 1);
+    sleep(5);
+    digitalWrite(solenoidLockPin, 0);
+}
+
 void noWaterWait(){
     if (lastnoWater==false && noWater==true) {
 
@@ -203,8 +209,8 @@ int main(int argc, char* argv[]){
     pullUpDnControl (maxWaterPin, PUD_DOWN);
     pullUpDnControl (btnPin, PUD_UP);
 
-
-
+    pinMode (solenoidLockPin, OUTPUT);
+    pullUpDnControl (solenoidLockPin, PUD_DOWN);
     pinMode (relayFiltrationPin, OUTPUT);
     pinMode (relayPumpPin, OUTPUT);
     pullUpDnControl (relayFiltrationPin, PUD_DOWN);

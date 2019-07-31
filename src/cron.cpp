@@ -40,11 +40,16 @@ void fetch_cron(int previous_id=-1, bool previous_status=false){
             } else if (jrarr["cron"]["action"]=="set_run_mode"){
 
             } else if (jrarr["cron"]["action"]=="unlock_door"){
-
+                openSolenoidLock();
+                fetch_cron(jrarr["cron"]["id"], true);
             } else if (jrarr["cron"]["action"]=="reboot"){
-
-            } else if (jrarr["cron"]["action"]=="set_liters"){
+                fetch_cron(jrarr["cron"]["id"], true);
+                sync();
+                setuid(0);
+                reboot(RB_AUTOBOOT);
+            } else if (jrarr["cron"]["action"]=="set_litters"){
                 addCoins((float(jrarr["cron"]["vars"]["quantity"])*WaterCost));
+                fetch_cron(jrarr["cron"]["id"], true);
 
             }
         }

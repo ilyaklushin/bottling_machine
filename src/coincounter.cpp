@@ -14,7 +14,7 @@
  }
  void addCoins(float coins){
     inputCoinCounter+=coins;
-    sessioninputCoinCounter+=coins;
+    //sessioninputCoinCounter+=coins;
     targetWaterCount = (inputCoinCounter/WaterCost)*PulsePerLiter;
     std::stringstream displayCoinCounter_stream;
     displayCoinCounter_stream << std::fixed << std::setprecision(0) << inputCoinCounter;
