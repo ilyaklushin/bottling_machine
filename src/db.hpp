@@ -9,7 +9,7 @@
 bool busydb=false;
 using json = nlohmann::json;
 extern bool renew_cron;
-extern void fetch_cron();
+extern void fetch_cron(int previous_id, bool previous_status);
 
 #include "db.cpp"
 

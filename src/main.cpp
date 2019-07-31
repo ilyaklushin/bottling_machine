@@ -93,6 +93,7 @@ int write_config(){
         l_db_name = db_name;
 
         cfg.writeFile("bottling_machine.cfg");
+        return 1;
     }
     catch(const SettingNotFoundException &nfex){
         std::cerr << "Some settings not found in configuration file, while trying write configuration file." << std::endl;

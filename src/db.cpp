@@ -157,12 +157,12 @@ void db_send(){
                     if (jrarr["status"]==true){
                         std::cout << "HTTPS ok" << std::endl;
                         db_query((char *)db_name.c_str(), std::string("DELETE FROM HISTORY LIMIT 1"), NULL, 0);
-                        break;
                     }
                     renew_cron=jrarr["renew"];
                     if (renew_cron){
-                        fetch_cron();
+                        fetch_cron( -1 , NULL);
                     }
+                    break;
                 }
                 else { sleep(5);}
             }
@@ -170,7 +170,25 @@ void db_send(){
         }
         else{
             std::string dda = "id="+std::to_string(machine_id)+"&pass="+auth_key+"&action=keep_alive";
-            db_send_post(dda, api_address);
+            std::string curlbuff = db_send_post(dda, api_address);
+            std::cout << curlbuff << std::endl;
+            json jrarr;
+            try {
+                jrarr = json::parse(curlbuff);
+                std::cout << jrarr << std::endl;
+            } catch(json::parse_error){
+                std::cout << "HTTPS err:" << curlbuff << std::endl;
+                sleep(5);
+            }
+            if (jrarr["auth"]==true){
+                if (jrarr["status"]==true){
+                    std::cout << "HTTPS ok" << std::endl;
+                }
+                renew_cron=jrarr["renew"];
+                if (renew_cron){
+                    fetch_cron( -1 , NULL);
+                }
+            }
             break;
         }
     }
