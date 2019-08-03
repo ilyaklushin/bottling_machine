@@ -1,4 +1,4 @@
-#include "cStandby.h"
+#include "..\include\cStandby.h"
 
 cStandby::cStandby(int iterations, Pango::FontDescription *font_desc)
 {

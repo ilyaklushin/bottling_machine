@@ -5,8 +5,8 @@
 #include <pangomm/fontdescription.h>
 
 
-#include <cRun.h>
-#include <cStandby.h>
+#include "cRun.h"
+#include "cStandby.h"
 
 using namespace std;
 
