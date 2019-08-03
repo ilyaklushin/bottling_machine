@@ -20,7 +20,6 @@
 #include "src/GUI.cpp"
 #include "src/cRun.cpp"
 #include "src/cStandby.cpp"
-#include "src/box_run.cpp"
 
 
 //Values
