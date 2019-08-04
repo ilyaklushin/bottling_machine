@@ -8,17 +8,17 @@ using namespace std;
 class cMaintenance : public Gtk::Box
 {
 public:
-    cMaintenance(string *_liters, string *_money, Pango::FontDescription *font_desc);
+    cMaintenance(int *_tankLevel, bool *_max);
     virtual ~cMaintenance();
     void updateCounters();
 
 protected:
 
 private:
-    Gtk::Label *lMoney;
-    Gtk::Label *lLiters;
-    string *liters;
-    string *money;
+    Gtk::Label *lTankLevel;
+    Gtk::Label *lMax;
+    int *tankLevel;
+    bool *max;
 };
 
 #endif // CMAINTENANCE_H
