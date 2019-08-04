@@ -7,6 +7,7 @@
 
 #include "cRun.h"
 #include "cStandby.h"
+#include "cMaintenance.h"
 
 using namespace std;
 
@@ -19,22 +20,25 @@ public:
 protected:
 
 private:
-	int *state; // 0-3
+	int *state; // 0-4
     //string *liter;
     //string *money;
 
     int laststate;
 
-	bool update();
+    bool update();
     void change_box(Gtk::Box *b);
     void change_box(cRun *b);
     void change_box(cStandby *b);
+    void change_box(cMaintenance *b);
 
     Gtk::Box *box_nowater;
     Gtk::Box *box_thanks;
 
     cRun *box_run;
     cStandby *box_standby;
+
+    cMaintenance *box_maintenance;
 
 };
 

@@ -53,6 +53,7 @@ GUI::GUI(int *_state, string *_liter, string *_money, int font_size, string font
 
     box_run = new cRun(_liter, _money, font_desc);
     box_standby = new cStandby(100,font_desc);
+    box_maintenance = new cMaintenance(_liter, _money, font_desc);
 
 }
 
@@ -63,6 +64,7 @@ GUI::~GUI()
     delete box_thanks;
     delete box_standby;
     delete box_run;
+    delete box_maintenance;
 }
 
 void GUI::change_box(Gtk::Box *b)
@@ -80,11 +82,17 @@ void GUI::change_box(cStandby *b)
     this->remove();
     add(*b);
 }
+void GUI::change_box(cMaintenance *b)
+{
+    this->remove();
+    add(*b);
+}
 
 bool GUI::update()
 {
     box_run->updateCounters();
     box_standby->updateCounters();
+    box_maintenance->updateCounters();
 
     if (laststate == *state) return true;
     laststate = *state;
@@ -101,11 +109,16 @@ bool GUI::update()
 			this->change_box(box_thanks);
 			break;
 		}
-		case 3:
-		{
-			this->change_box(box_nowater);
-			break;
-		}
+        case 3:
+        {
+            this->change_box(box_nowater);
+            break;
+        }
+        case 4:
+        {
+            this->change_box(box_maintenance);
+            break;
+        }
 		default:
 		{
 			this->change_box(box_standby);
