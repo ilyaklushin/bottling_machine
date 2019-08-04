@@ -14,15 +14,19 @@ using namespace std;
 class GUI: public Gtk::Window
 {
 public:
-    GUI(int *_state, string *_liter, string *_money, int font_size = 40, string fontFamily = "DejaVu Sans Ultra-Light");
+    GUI(int *_state,
+        string *_liter,
+        string *_money,
+        int *_tankLevel,
+        bool *_max,
+        int font_size = 40,
+        string fontFamily = "DejaVu Sans Ultra-Light");
     virtual ~GUI();
 
 protected:
 
 private:
 	int *state; // 0-4
-    //string *liter;
-    //string *money;
 
     int laststate;
 

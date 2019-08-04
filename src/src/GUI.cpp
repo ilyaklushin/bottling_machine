@@ -2,10 +2,16 @@
 
 using namespace std;
 
-GUI::GUI(int *_state, string *_liter, string *_money, int font_size, string fontFamily)
+GUI::GUI(int *_state,
+         string *_liter,
+         string *_money,
+         int *_tankLevel,
+         bool *_max,
+         int font_size,
+         string fontFamily)
 {
     state = _state;
-    laststate = 11; // do not touch!!!!!!!!!!!!!!!!!!!!!
+    laststate = -1;
 
     int timeout_value = 50;
     sigc::slot<bool> slot_update = sigc::mem_fun(*this, &GUI::update);
@@ -20,7 +26,8 @@ GUI::GUI(int *_state, string *_liter, string *_money, int font_size, string font
     set_modal(true);
     auto display = get_display();
     auto window = get_window();
-    auto grabSuccess = display->get_default_seat()->grab(window, Gdk::SEAT_CAPABILITY_ALL, true);
+    //auto grabSuccess = display->get_default_seat()->grab(window, Gdk::SEAT_CAPABILITY_ALL, true);
+    display->get_default_seat()->grab(window, Gdk::SEAT_CAPABILITY_NONE, true);
 
     auto image_nowater = new Gtk::Image("NoWater.png");
 
@@ -52,8 +59,8 @@ GUI::GUI(int *_state, string *_liter, string *_money, int font_size, string font
     }
 
     box_run = new cRun(_liter, _money, font_desc);
-    box_standby = new cStandby(100,font_desc);
-    box_maintenance = new cMaintenance(_liter, _money, font_desc);
+    box_standby = new cStandby(100, font_desc);
+    box_maintenance = new cMaintenance(_tankLevel, _max);
 
 }
 
