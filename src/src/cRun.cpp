@@ -1,4 +1,4 @@
-#include "..\include\cRun.h"
+#include "../include/cRun.h"
 
 cRun::cRun(string *_liters, string *_money, Pango::FontDescription *font_desc)
 {
