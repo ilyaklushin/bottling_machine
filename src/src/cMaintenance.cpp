@@ -262,10 +262,10 @@ cMaintenance::cMaintenance(
 	Gtk::Box * inputStatusBlock = new Gtk::Box();
 	inputStatusBlock->set_orientation(Gtk::ORIENTATION_VERTICAL);
 	
-	// Output status
+	// Input status
 	Gtk::Box * pInputStatus = new Gtk::Box();
 	
-	Gtk::Label *ltInputStatus = new Gtk::Label("Output status");
+	Gtk::Label *ltInputStatus = new Gtk::Label("Input status");
 	ltInputStatus->override_font(*font);
 	pInputStatus->pack_start(*ltInputStatus, Gtk::PACK_EXPAND_WIDGET);
 
