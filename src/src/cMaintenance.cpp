@@ -53,7 +53,15 @@ cMaintenance::cMaintenance(
 	// Основной
 	Gtk::Box * pMain = new Gtk::Box();
 
-	// Первый блок уровень бака
+	// Уровень бака
+	tankLevelBar = new Gtk::LevelBar();
+	tankLevelBar->set_min_value(0.0);
+	tankLevelBar->set_max_value(100.0);
+	tankLevelBar->set_orientation(Gtk::ORIENTATION_VERTICAL);
+	tankLevelBar->set_inverted(true);
+	pMain->pack_start(*tankLevelBar, Gtk::PACK_EXPAND_WIDGET, 5);
+
+	// Первый блок датчики бака
 	Gtk::Box * tankBlock = new Gtk::Box();
 	tankBlock->set_orientation(Gtk::ORIENTATION_VERTICAL);
 	
@@ -464,6 +472,7 @@ cMaintenance::~cMaintenance()
 	delete watchDog;
 	delete lastKeepalive;
 
+	delete tankLevelBar;
 	delete lTankLevel;
 	delete lMax;
 	delete lMid;
@@ -504,7 +513,9 @@ string GetDate()
 
 void cMaintenance::updateCounters()
 {
+	tankLevelBar->set_value(*tankLevel);
 	lTankLevel->set_text(to_string(*tankLevel) + "%");
+
 	lMax->set_text(to_string(*max));
 	lMid->set_text(to_string(*mid));
 	lMin->set_text(to_string(*min));

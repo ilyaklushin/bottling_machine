@@ -19,6 +19,7 @@ public:
 protected:
 
 private:
+	Gtk::LevelBar *tankLevelBar;
 	Gtk::Label *lTankLevel;
 	Gtk::Label *lMax;
 	Gtk::Label *lMid;
