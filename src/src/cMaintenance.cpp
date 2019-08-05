@@ -3,7 +3,7 @@
 cMaintenance::cMaintenance(
 	int *_tankLevel, bool *_max, bool *_mid, bool *_min, int *_in, int *_out,
 	bool *_pumpRelay, bool *_filtrationRelay, bool *_cleaningRelay, bool *_heatingRelay, bool *_solenoidLock, bool *_coinValidatorPwr,
-	float *_temperature, float *_coins, float *_waterCounter, string *_buttons, string *_sensorsExt, int *_rangingMod, bool *_watchDog, bool *_lastKeepalive)
+	float *_temperature, float *_coins, float *_waterCounter, string *_buttons, string *_sensorsExt, int *_rangingMod, bool *_watchDog, bool *_lastKeepalive, int *_machineId)
 {
 	// Копирование указателей
 	tankLevel = _tankLevel;
@@ -26,7 +26,7 @@ cMaintenance::cMaintenance(
 	rangingMod = _rangingMod;
 	watchDog = _watchDog;
 	lastKeepalive = _lastKeepalive;
-
+	
 	// Настройка блока cMaintenance
 	set_orientation(Gtk::ORIENTATION_VERTICAL);
 	
@@ -428,7 +428,7 @@ cMaintenance::cMaintenance(
 	ltMachineID->override_font(*font);
 	pMachineID->pack_start(*ltMachineID, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lMachineID = new Gtk::Label("407");
+	Gtk::Label *lMachineID = new Gtk::Label(to_string(*_machineId));
 	lMachineID->set_xalign(0);
 	lMachineID->override_font(*font);
 	pMachineID->pack_start(*lMachineID, Gtk::PACK_EXPAND_WIDGET);

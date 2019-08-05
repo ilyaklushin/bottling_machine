@@ -11,7 +11,7 @@ class cMaintenance : public Gtk::Box
 public:
     cMaintenance(int *_tankLevel, bool *_max, bool *_mid, bool *_min, int *_in, int *_out,
 	bool *_pumpRelay, bool *_filtrationRelay, bool *_cleaningRelay, bool *_heatingRelay, bool *_solenoidLock, bool *_coinValidatorPwr,
-	float *_temperature, float *_coins, float *_waterCounter, string *_buttons, string *_sensorsExt, int *_rangingMod, bool *_watchDog, bool *_lastKeepalive);
+	float *_temperature, float *_coins, float *_waterCounter, string *_buttons, string *_sensorsExt, int *_rangingMod, bool *_watchDog, bool *_lastKeepalive, int *_machineId);
     virtual ~cMaintenance();
     void updateCounters();
 
@@ -38,6 +38,7 @@ private:
 	Gtk::Label *lRangingMod;
 	Gtk::Label *lWatchDog;
 	Gtk::Label *lLastKeepalive;
+
 
 
     int *tankLevel, *in, *out, *rangingMod;
