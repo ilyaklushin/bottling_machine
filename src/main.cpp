@@ -153,8 +153,27 @@ void toserver (){
 void run_gui(int *_state, string *_liter, string *_money)
 {
     Glib::RefPtr<Gtk::Application> app = Gtk::Application::create("com.watermachine.gui");
+  int tankLevel = 35;
+  int in = 25;
+  int out = 250;
 
-    GUI gui(_state, _liter, _money, 48, "Lato");
+  bool pumpRelay = true;
+  bool filtrationRelay = true;
+  bool cleaningRelay = true;
+  bool heatingRelay = false;
+  bool solenoidLock = false;
+  bool coinValidatorPwr = true;
+  float temperature = 21.5;
+  float coins = 5.0;
+  float waterCounter = 60.0;
+  string buttons = "000";
+  string sensorsExt = "000";
+  int rangingMod = 10;
+  bool watchDog = true;
+  bool lastKeepalive = true;
+  int machineId = 407;
+
+    GUI gui(_state, _liter, _money, &tankLevel, &maxWater, &midWater, &minWater, &in, &out, &pumpRelay, &filtrationRelay, &cleaningRelay, &heatingRelay, &solenoidLock, &coinValidatorPwr, &temperature, &coins, &waterCounter, &buttons, &sensorsExt, &rangingMod, &watchDog, &lastKeepalive, &machineId,  48, "Lato");
 
     app->run(gui);
 }
@@ -172,7 +191,7 @@ void chst_gui(){
             delay(50);
         }
         if(noWater==true){
-        action=3;
+        action=4;
         }
         else{action=0;}
         delay(50);
