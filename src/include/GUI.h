@@ -1,9 +1,7 @@
 #ifndef GUI_H
 #define GUI_H
 #include <gtkmm.h>
-//#include <gtkmm/image.h>
 #include <pangomm/fontdescription.h>
-
 
 #include "cRun.h"
 #include "cStandby.h"
