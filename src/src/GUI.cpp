@@ -2,11 +2,10 @@
 
 using namespace std;
 
-GUI::GUI(int *_state,
-         string *_liter,
-         string *_money,
-         int *_tankLevel,
-         bool *_max,
+GUI::GUI(int *_state, string *_liter, string *_money,
+         int *_tankLevel, bool *_max, bool *_mid, bool *_min, int *_in, int *_out,
+         bool *_pumpRelay, bool *_filtrationRelay, bool *_cleaningRelay, bool *_heatingRelay, bool *_solenoidLock, bool *_coinValidatorPwr,
+         float *_temperature, float *_coins, float *_waterCounter, string *_buttons, string *_sensorsExt, int *_rangingMod, bool *_watchDog, bool *_lastKeepalive,
          int font_size,
          string fontFamily)
 {
@@ -57,7 +56,10 @@ GUI::GUI(int *_state,
 
     box_run = new cRun(_liter, _money, font_desc);
     box_standby = new cStandby(100, font_desc);
-    box_maintenance = new cMaintenance(_tankLevel, _max);
+    box_maintenance = new cMaintenance(
+        _tankLevel, _max, _mid, _min, _in, _out, _pumpRelay,
+        _filtrationRelay, _cleaningRelay, _heatingRelay, _solenoidLock, _coinValidatorPwr,
+        _temperature, _coins, _waterCounter, _buttons, _sensorsExt, _rangingMod, _watchDog, _lastKeepalive);
 
 }
 

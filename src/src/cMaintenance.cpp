@@ -1,42 +1,31 @@
 #include "../include/cMaintenance.h"
 
-cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
+cMaintenance::cMaintenance(
+	int *_tankLevel, bool *_max, bool *_mid, bool *_min, int *_in, int *_out,
+	bool *_pumpRelay, bool *_filtrationRelay, bool *_cleaningRelay, bool *_heatingRelay, bool *_solenoidLock, bool *_coinValidatorPwr,
+	float *_temperature, float *_coins, float *_waterCounter, string *_buttons, string *_sensorsExt, int *_rangingMod, bool *_watchDog, bool *_lastKeepalive)
 {
 	// Копирование указателей
 	tankLevel = _tankLevel;
 	max = _max;
-
-	// lMoney = new Gtk::Label();
-	// lMoney->override_font(*font_desc);
-	// lMoney->set_xalign(1);
-
-	// lLiters = new Gtk::Label();
-	// lLiters->override_font(*font_desc);
-	// lLiters->set_xalign(1);
-	// lLiters->set_margin_right(35);
-
-	// Gtk::Label *ltMoney = new Gtk::Label("На счету:");
-	// ltMoney->set_xalign(0);
-	// ltMoney->override_font(*font_desc);
-
-	// Gtk::Label *ltLiters = new Gtk::Label("Литры:");
-	// ltLiters->set_xalign(0);
-	// ltLiters->override_font(*font_desc);
-
-	// Gtk::Box * pPackBox1 = new Gtk::Box();
-	// pPackBox1->set_orientation(Gtk::ORIENTATION_VERTICAL);
-	// pPackBox1->pack_start(*ltMoney, Gtk::PACK_EXPAND_WIDGET);
-	// pPackBox1->pack_start(*ltLiters,Gtk::PACK_EXPAND_WIDGET);
-
-	// Gtk::Box * pPackBox2 = new Gtk::Box();
-	// pPackBox2->set_orientation(Gtk::ORIENTATION_VERTICAL);
-	// pPackBox2->pack_start(*lMoney, Gtk::PACK_EXPAND_WIDGET);
-	// pPackBox2->pack_start(*lLiters,Gtk::PACK_EXPAND_WIDGET);
-
-	//   pack_start(*pPackBox1, Gtk::PACK_SHRINK, 10);
-	//   pack_start(*pPackBox2, Gtk::PACK_EXPAND_WIDGET, 10);
-
-
+	mid = _mid;
+	min = _min;
+	in = _in;
+	out = _out;
+	pumpRelay = _pumpRelay;
+	filtrationRelay = _filtrationRelay; 
+	cleaningRelay = _cleaningRelay;
+	heatingRelay = _heatingRelay;
+	solenoidLock = _solenoidLock;
+	coinValidatorPwr = _coinValidatorPwr;
+	temperature = _temperature;
+	coins = _coins;
+	waterCounter = _waterCounter;
+	buttons = _buttons;
+	sensorsExt = _sensorsExt;
+	rangingMod = _rangingMod;
+	watchDog = _watchDog;
+	lastKeepalive = _lastKeepalive;
 
 	// Настройка блока cMaintenance
 	set_orientation(Gtk::ORIENTATION_VERTICAL);
@@ -76,7 +65,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltTankLevel->override_font(*font);
 	pTankLevel->pack_start(*ltTankLevel, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lTankLevel = new Gtk::Label("5%");
+	lTankLevel = new Gtk::Label("5%");
 	lTankLevel->set_xalign(0);
 	lTankLevel->override_font(*font);
 	pTankLevel->pack_start(*lTankLevel, Gtk::PACK_EXPAND_WIDGET);
@@ -91,7 +80,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltMax->override_font(*font);
 	pMax->pack_start(*ltMax, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lMax = new Gtk::Label("f");
+	lMax = new Gtk::Label("false");
 	lMax->set_xalign(0);
 	lMax->override_font(*font);
 	pMax->pack_start(*lMax, Gtk::PACK_EXPAND_WIDGET);
@@ -106,7 +95,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltMid->override_font(*font);
 	pMid->pack_start(*ltMid, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lMid = new Gtk::Label("true");
+	lMid = new Gtk::Label("true");
 	lMid->set_xalign(0);
 	lMid->override_font(*font);
 	pMid->pack_start(*lMid, Gtk::PACK_EXPAND_WIDGET);
@@ -121,7 +110,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltMin->override_font(*font);
 	pMin->pack_start(*ltMin, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lMin = new Gtk::Label("false");
+	lMin = new Gtk::Label("false");
 	lMin->set_xalign(0);
 	lMin->override_font(*font);
 	pMin->pack_start(*lMin, Gtk::PACK_EXPAND_WIDGET);
@@ -136,7 +125,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltIn->override_font(*font);
 	pIn->pack_start(*ltIn, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lIn = new Gtk::Label("25 lph");
+	lIn = new Gtk::Label("25 lph");
 	lIn->set_xalign(0);
 	lIn->override_font(*font);
 	pIn->pack_start(*lIn, Gtk::PACK_EXPAND_WIDGET);
@@ -151,7 +140,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltOut->override_font(*font);
 	pOut->pack_start(*ltOut, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lOut = new Gtk::Label("250 lph");
+	lOut = new Gtk::Label("250 lph");
 	lOut->set_xalign(0);
 	lOut->override_font(*font);
 	pOut->pack_start(*lOut, Gtk::PACK_EXPAND_WIDGET);
@@ -176,19 +165,19 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	outputStatusBlock->pack_start(*pOutputStatus, Gtk::PACK_EXPAND_PADDING);
 
 	// Output pump relay
-	Gtk::Box * pOutputPumpRelay = new Gtk::Box();
+	Gtk::Box * pPumpRelay = new Gtk::Box();
 	
-	Gtk::Label *ltOutputPumpRelay = new Gtk::Label("Output pump relay: ");
-	ltOutputPumpRelay->set_xalign(1);
-	ltOutputPumpRelay->override_font(*font);
-	pOutputPumpRelay->pack_start(*ltOutputPumpRelay, Gtk::PACK_EXPAND_WIDGET);
+	Gtk::Label *ltPumpRelay = new Gtk::Label("Output pump relay: ");
+	ltPumpRelay->set_xalign(1);
+	ltPumpRelay->override_font(*font);
+	pPumpRelay->pack_start(*ltPumpRelay, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lOutputPumpRelay = new Gtk::Label("false");
-	lOutputPumpRelay->set_xalign(0);
-	lOutputPumpRelay->override_font(*font);
-	pOutputPumpRelay->pack_start(*lOutputPumpRelay, Gtk::PACK_EXPAND_WIDGET);
+	lPumpRelay = new Gtk::Label("false");
+	lPumpRelay->set_xalign(0);
+	lPumpRelay->override_font(*font);
+	pPumpRelay->pack_start(*lPumpRelay, Gtk::PACK_EXPAND_WIDGET);
 	
-	outputStatusBlock->pack_start(*pOutputPumpRelay, Gtk::PACK_EXPAND_PADDING);
+	outputStatusBlock->pack_start(*pPumpRelay, Gtk::PACK_EXPAND_PADDING);
 
 	// Filtration relay
 	Gtk::Box * pFiltrationRelay = new Gtk::Box();
@@ -198,7 +187,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltFiltrationRelay->override_font(*font);
 	pFiltrationRelay->pack_start(*ltFiltrationRelay, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lFiltrationRelay = new Gtk::Label("true");
+	lFiltrationRelay = new Gtk::Label("true");
 	lFiltrationRelay->set_xalign(0);
 	lFiltrationRelay->override_font(*font);
 	pFiltrationRelay->pack_start(*lFiltrationRelay, Gtk::PACK_EXPAND_WIDGET);
@@ -213,7 +202,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltCleaningRelay->override_font(*font);
 	pCleaningRelay->pack_start(*ltCleaningRelay, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lCleaningRelay = new Gtk::Label("false");
+	lCleaningRelay = new Gtk::Label("false");
 	lCleaningRelay->set_xalign(0);
 	lCleaningRelay->override_font(*font);
 	pCleaningRelay->pack_start(*lCleaningRelay, Gtk::PACK_EXPAND_WIDGET);
@@ -228,7 +217,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltHeatingRelay->override_font(*font);
 	pHeatingRelay->pack_start(*ltHeatingRelay, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lHeatingRelay = new Gtk::Label("false");
+	lHeatingRelay = new Gtk::Label("false");
 	lHeatingRelay->set_xalign(0);
 	lHeatingRelay->override_font(*font);
 	pHeatingRelay->pack_start(*lHeatingRelay, Gtk::PACK_EXPAND_WIDGET);
@@ -243,7 +232,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltSolenoidLock->override_font(*font);
 	pSolenoidLock->pack_start(*ltSolenoidLock, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lSolenoidLock = new Gtk::Label("false");
+	lSolenoidLock = new Gtk::Label("false");
 	lSolenoidLock->set_xalign(0);
 	lSolenoidLock->override_font(*font);
 	pSolenoidLock->pack_start(*lSolenoidLock, Gtk::PACK_EXPAND_WIDGET);
@@ -258,7 +247,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltCoinValidatorPwr->override_font(*font);
 	pCoinValidatorPwr->pack_start(*ltCoinValidatorPwr, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lCoinValidatorPwr = new Gtk::Label("true");
+	lCoinValidatorPwr = new Gtk::Label("true");
 	lCoinValidatorPwr->set_xalign(0);
 	lCoinValidatorPwr->override_font(*font);
 	pCoinValidatorPwr->pack_start(*lCoinValidatorPwr, Gtk::PACK_EXPAND_WIDGET);
@@ -266,7 +255,6 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	outputStatusBlock->pack_start(*pCoinValidatorPwr, Gtk::PACK_EXPAND_PADDING);
 
 	pMain->pack_start(*outputStatusBlock, Gtk::PACK_EXPAND_WIDGET);
-
 
 
 
@@ -291,7 +279,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltTemperature->override_font(*font);
 	pTemperature->pack_start(*ltTemperature, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lTemperature = new Gtk::Label("21.5 °C");
+	lTemperature = new Gtk::Label("21.5 °C");
 	lTemperature->set_xalign(0);
 	lTemperature->override_font(*font);
 	pTemperature->pack_start(*lTemperature, Gtk::PACK_EXPAND_WIDGET);
@@ -306,7 +294,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltCoins->override_font(*font);
 	pCoins->pack_start(*ltCoins, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lCoins = new Gtk::Label("000.000");
+	lCoins = new Gtk::Label("000.000");
 	lCoins->set_xalign(0);
 	lCoins->override_font(*font);
 	pCoins->pack_start(*lCoins, Gtk::PACK_EXPAND_WIDGET);
@@ -321,7 +309,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltWaterCounter->override_font(*font);
 	pWaterCounter->pack_start(*ltWaterCounter, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lWaterCounter = new Gtk::Label("00.00 lpm");
+	lWaterCounter = new Gtk::Label("00.00 lpm");
 	lWaterCounter->set_xalign(0);
 	lWaterCounter->override_font(*font);
 	pWaterCounter->pack_start(*lWaterCounter, Gtk::PACK_EXPAND_WIDGET);
@@ -336,7 +324,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltButtons->override_font(*font);
 	pButtons->pack_start(*ltButtons, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lButtons = new Gtk::Label("000");
+	lButtons = new Gtk::Label("000");
 	lButtons->set_xalign(0);
 	lButtons->override_font(*font);
 	pButtons->pack_start(*lButtons, Gtk::PACK_EXPAND_WIDGET);
@@ -351,7 +339,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltSensorsExt->override_font(*font);
 	pSensorsExt->pack_start(*ltSensorsExt, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lSensorsExt = new Gtk::Label("false");
+	lSensorsExt = new Gtk::Label("false");
 	lSensorsExt->set_xalign(0);
 	lSensorsExt->override_font(*font);
 	pSensorsExt->pack_start(*lSensorsExt, Gtk::PACK_EXPAND_WIDGET);
@@ -366,7 +354,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltRangingMod->override_font(*font);
 	pRangingMod->pack_start(*ltRangingMod, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lRangingMod = new Gtk::Label("0000 mm");
+	lRangingMod = new Gtk::Label("0000 mm");
 	lRangingMod->set_xalign(0);
 	lRangingMod->override_font(*font);
 	pRangingMod->pack_start(*lRangingMod, Gtk::PACK_EXPAND_WIDGET);
@@ -381,7 +369,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltWatchDog->override_font(*font);
 	pWatchDog->pack_start(*ltWatchDog, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lWatchDog = new Gtk::Label("true");
+	lWatchDog = new Gtk::Label("true");
 	lWatchDog->set_xalign(0);
 	lWatchDog->override_font(*font);
 	pWatchDog->pack_start(*lWatchDog, Gtk::PACK_EXPAND_WIDGET);
@@ -396,7 +384,7 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	ltLastKeepalive->override_font(*font);
 	pLastKeepalive->pack_start(*ltLastKeepalive, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lLastKeepalive = new Gtk::Label("true");
+	lLastKeepalive = new Gtk::Label("true");
 	lLastKeepalive->set_xalign(0);
 	lLastKeepalive->override_font(*font);
 	pLastKeepalive->pack_start(*lLastKeepalive, Gtk::PACK_EXPAND_WIDGET);
@@ -404,7 +392,6 @@ cMaintenance::cMaintenance(int *_tankLevel, bool *_max)
 	inputStatusBlock->pack_start(*pLastKeepalive, Gtk::PACK_EXPAND_PADDING);
 
 	pMain->pack_start(*inputStatusBlock, Gtk::PACK_EXPAND_WIDGET);
-
 
 
 
@@ -458,17 +445,77 @@ cMaintenance::~cMaintenance()
 {
 	delete tankLevel;
 	delete max;
+	delete mid;
+	delete min;
+	delete in;
+	delete out;
+	delete pumpRelay;
+	delete filtrationRelay;
+	delete cleaningRelay;
+	delete heatingRelay;
+	delete solenoidLock;
+	delete coinValidatorPwr;
+	delete temperature;
+	delete coins;
+	delete waterCounter;
+	delete buttons;
+	delete sensorsExt;
+	delete rangingMod;
+	delete watchDog;
+	delete lastKeepalive;
 
 	delete lTankLevel;
 	delete lMax;
+	delete lMid;
+	delete lMin;
+	delete lIn;
+	delete lOut;
+	delete lPumpRelay;
+	delete lFiltrationRelay;
+	delete lCleaningRelay;
+	delete lHeatingRelay;
+	delete lSolenoidLock;
+	delete lCoinValidatorPwr;
+	delete lTemperature;
+	delete lCoins;
+	delete lWaterCounter;
+	delete lButtons;
+	delete lSensorsExt;
+	delete lRangingMod;
+	delete lWatchDog;
+	delete lLastKeepalive;
 }
 
 void cMaintenance::updateCounters()
 {
-	//lMoney->set_text(string(*money) + "₽");
-    
-    lTankLevel->set_text(to_string(*tankLevel) + "%");
-    lMax->set_text(to_string(*max));
-    //lTankLevel->set_text("");
-    //lMax->set_text("");
+	lTankLevel->set_text(to_string(*tankLevel) + "%");
+	lMax->set_text(to_string(*max));
+	lMid->set_text(to_string(*mid));
+	lMin->set_text(to_string(*min));
+	lIn->set_text(to_string(*in) + " lph");
+	lOut->set_text(to_string(*out) + " lph");
+	lPumpRelay->set_text(to_string(*pumpRelay));
+	lFiltrationRelay->set_text(to_string(*filtrationRelay));
+	lCleaningRelay->set_text(to_string(*cleaningRelay));
+	lHeatingRelay->set_text(to_string(*heatingRelay));
+	lSolenoidLock->set_text(to_string(*solenoidLock));
+	lCoinValidatorPwr->set_text(to_string(*coinValidatorPwr));
+
+	ss.str(string());
+	ss << fixed << setprecision(2) << *temperature;
+	lTemperature->set_text(ss.str() + " °C");
+	
+	ss.str(string());
+	ss << fixed << setprecision(2) << *coins;
+	lCoins->set_text(ss.str());
+	
+	ss.str(string());
+	ss << fixed << setprecision(2) << *waterCounter;
+	lWaterCounter->set_text(ss.str() + " lpm");
+	
+	lButtons->set_text(*buttons);
+	lSensorsExt->set_text(*sensorsExt);
+	lRangingMod->set_text(to_string(*rangingMod) + " mm");
+	lWatchDog->set_text(to_string(*watchDog));
+	lLastKeepalive->set_text(to_string(*lastKeepalive));
 } 
