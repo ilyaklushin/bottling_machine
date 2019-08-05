@@ -59,7 +59,9 @@ GUI::GUI(int *_state, string *_liter, string *_money,
     box_maintenance = new cMaintenance(
         _tankLevel, _max, _mid, _min, _in, _out, _pumpRelay,
         _filtrationRelay, _cleaningRelay, _heatingRelay, _solenoidLock, _coinValidatorPwr,
-        _temperature, _coins, _waterCounter, _buttons, _sensorsExt, _rangingMod, _watchDog, _lastKeepalive, _machineId);
+        _temperature, _coins, _waterCounter, _buttons, _sensorsExt, _rangingMod, _watchDog, _lastKeepalive, _machineId,
+        fontFamily
+        );
 
 }
 
