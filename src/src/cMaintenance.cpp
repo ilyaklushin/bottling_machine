@@ -408,7 +408,7 @@ cMaintenance::cMaintenance(
 	ltDate->override_font(*font);
 	pDate->pack_start(*ltDate, Gtk::PACK_EXPAND_WIDGET);
 
-	Gtk::Label *lDate = new Gtk::Label("12.05.2019 13:00");
+	lDate = new Gtk::Label("12.05.2019 13:00");
 	lDate->set_xalign(0);
 	lDate->override_font(*font);
 	pDate->pack_start(*lDate, Gtk::PACK_EXPAND_WIDGET);
@@ -484,6 +484,22 @@ cMaintenance::~cMaintenance()
 	delete lRangingMod;
 	delete lWatchDog;
 	delete lLastKeepalive;
+	delete lDate;
+}
+
+string GetDate()
+{
+	time_t rawtime;
+	struct tm * timeinfo;
+	char buffer[80];
+
+	time (&rawtime);
+	timeinfo = localtime(&rawtime);
+
+	strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", timeinfo);
+	string str(buffer);
+
+	return str;
 }
 
 void cMaintenance::updateCounters()
@@ -518,4 +534,6 @@ void cMaintenance::updateCounters()
 	lRangingMod->set_text(to_string(*rangingMod) + " mm");
 	lWatchDog->set_text(to_string(*watchDog));
 	lLastKeepalive->set_text(to_string(*lastKeepalive));
+
+	lDate->set_text(GetDate());
 } 

@@ -3,6 +3,7 @@
 #include <gtkmm.h>
 #include <pangomm/fontdescription.h>
 #include <iomanip>
+#include <ctime>
 
 using namespace std;
 
@@ -38,8 +39,7 @@ private:
 	Gtk::Label *lRangingMod;
 	Gtk::Label *lWatchDog;
 	Gtk::Label *lLastKeepalive;
-
-
+	Gtk::Label *lDate;
 
     int *tankLevel, *in, *out, *rangingMod;
     bool *max, *mid, *min, *pumpRelay, *filtrationRelay, *cleaningRelay, *heatingRelay, *solenoidLock, *coinValidatorPwr, *watchDog, *lastKeepalive;
