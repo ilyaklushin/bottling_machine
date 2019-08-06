@@ -191,7 +191,7 @@ void chst_gui(){
             delay(50);
         }
         if(noWater==true){
-        action=4;
+        action=3;
         }
         else{action=0;}
         delay(50);
