@@ -38,7 +38,10 @@ void fetch_cron(int previous_id=-1, bool previous_status=false){
                     fetch_cron(jrarr["cron"]["id"], false);
                 }
             } else if (jrarr["cron"]["action"]=="set_run_mode"){
-
+                if (jrarr["cron"]["vars"]["mode"]=="maintenance"){maintenanceMode=true;}
+                else {maintenanceMode=false;}
+                if (jrarr["cron"]["vars"]["mode"]=="remote_control"){remote_controlMode=true;}
+                else {remote_controlMode=false;}
             } else if (jrarr["cron"]["action"]=="unlock_door"){
                 openSolenoidLock();
                 fetch_cron(jrarr["cron"]["id"], true);

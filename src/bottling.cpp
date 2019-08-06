@@ -32,6 +32,7 @@ void bottling(){
             std::cout << "outputWaterCounter " << outputWaterCounter << " targetWaterCount " << targetWaterCount << " sessionWaterCount " << sessionWaterCount << " inputCoinCounter " << inputCoinCounter << std::endl;
             spill=true;
             if (inputCoinCounter<targetWaterCount){
+                relayPump=true;
                 digitalWrite(relayPumpPin, 1);
             }
             else{

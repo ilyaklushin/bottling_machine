@@ -102,8 +102,10 @@ int write_config(){
 }
 
 void openSolenoidLock(){
+    solenoidLockOut=true;
     digitalWrite(solenoidLockPin, 1);
     sleep(5);
+    solenoidLockOut=false;
     digitalWrite(solenoidLockPin, 0);
 }
 
@@ -121,6 +123,10 @@ void renew(){
         btn=!digitalRead(btnPin);
         if(lastbtn!=btn && btn == true) {usebtn=!usebtn;}
         lastbtn=btn;
+        btn2=!digitalRead(btn2Pin);
+        btn3=!digitalRead(btn3Pin);
+        displayButtons = std::to_string(btn) + std::to_string(btn2) + std::to_string(btn3);
+        displaySensors = std::to_string(digitalRead(sensExt1Pin)) + std::to_string(digitalRead(sensExt2Pin)) + std::to_string(digitalRead(sensExt3Pin));
         std::cout << "dispW: " << displayWaterCounter << "dispC:" << displayCoinCounter << "Btn:" << digitalRead(btnPin) << endl;
         delay(250);
         //db_bottling_add(1, 2);
@@ -133,9 +139,9 @@ void filtration (){
     if (minWater==true or botling==true) {noWater=false; noWaterWait();}
     else {noWater=true;}
     if (minWater==true){sensWater+=100;}
-    if (midWater==false) {digitalWrite(relayFiltrationPin, 1);}
+    if (midWater==false) {digitalWrite(relayFiltrationPin, 1); relayFiltration=true;}
     else {sensWater+=10;}
-    if (maxWater==true) {digitalWrite(relayFiltrationPin, 0); sensWater+=1;}
+    if (maxWater==true) {digitalWrite(relayFiltrationPin, 0); sensWater+=1; relayFiltration=false;}
     if (sensWater!=lastsensWater){
         db_add_filtration(minWater, midWater, maxWater);
     }
@@ -150,30 +156,22 @@ void toserver (){
     }
 }
 
-void run_gui(int *_state, string *_liter, string *_money)
+void run_gui(int *_state, string *_liter, string *_money, int *_tankLevel )
 {
     Glib::RefPtr<Gtk::Application> app = Gtk::Application::create("com.watermachine.gui");
-  int tankLevel = 35;
   int in = 25;
   int out = 250;
 
-  bool pumpRelay = true;
-  bool filtrationRelay = true;
   bool cleaningRelay = true;
   bool heatingRelay = false;
-  bool solenoidLock = false;
-  bool coinValidatorPwr = true;
+  bool *coinValidatorPwr = &minWater;
   float temperature = 21.5;
-  float coins = 5.0;
-  float waterCounter = 60.0;
-  string buttons = "000";
-  string sensorsExt = "000";
+  float WaterCounterRate = 60.0;
   int rangingMod = 10;
   bool watchDog = true;
-  bool lastKeepalive = true;
-  int machineId = 407;
 
-    GUI gui(_state, _liter, _money, &tankLevel, &maxWater, &midWater, &minWater, &in, &out, &pumpRelay, &filtrationRelay, &cleaningRelay, &heatingRelay, &solenoidLock, &coinValidatorPwr, &temperature, &coins, &waterCounter, &buttons, &sensorsExt, &rangingMod, &watchDog, &lastKeepalive, &machineId,  48, "Lato");
+    GUI gui(_state, _liter, _money, _tankLevel, &maxWater, &midWater, &minWater, &in, &out, &relayPump, &relayFiltration, &cleaningRelay, &heatingRelay, &solenoidLockOut, coinValidatorPwr,
+            &temperature, &inputCoinCounter, &WaterCounterRate, &displayButtons, &displaySensors, &rangingMod, &watchDog, &last_keepalive, &machine_id,  48, "Lato");
 
     app->run(gui);
 }
@@ -190,9 +188,8 @@ void chst_gui(){
             else{action=1;}
             delay(50);
         }
-        if(noWater==true){
-        action=3;
-        }
+        if(noWater==true){action=3;}
+        else if (maintenanceMode==true){action=4;}
         else{action=0;}
         delay(50);
     }
@@ -223,10 +220,17 @@ int main(int argc, char* argv[]){
     pinMode (midWaterPin, INPUT);
     pinMode (maxWaterPin, INPUT);
     pinMode (btnPin, INPUT);
+    pinMode (btn2Pin, INPUT);
+    pinMode (btn3Pin, INPUT);
+    pinMode (sensExt1Pin, INPUT);
+    pinMode (sensExt2Pin, INPUT);
+    pinMode (sensExt3Pin, INPUT);
     pullUpDnControl (minWaterPin, PUD_DOWN);
     pullUpDnControl (midWaterPin, PUD_DOWN);
     pullUpDnControl (maxWaterPin, PUD_DOWN);
     pullUpDnControl (btnPin, PUD_UP);
+    pullUpDnControl (btn2Pin, PUD_UP);
+    pullUpDnControl (btn3Pin, PUD_UP);
 
     pinMode (solenoidLockPin, OUTPUT);
     pullUpDnControl (solenoidLockPin, PUD_DOWN);
@@ -246,7 +250,7 @@ int main(int argc, char* argv[]){
     std::thread trenew(renew);
     std::thread ttoserver(toserver);
 
-    std::thread trun_gui(run_gui, &action, &displayWaterCounter, &displayCoinCounter);
+    std::thread trun_gui(run_gui, &action, &displayWaterCounter, &displayCoinCounter, &tankLevel);
     std::thread tchst_gui(chst_gui);
 
 

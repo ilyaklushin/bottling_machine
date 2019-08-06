@@ -40,10 +40,15 @@ int lastsensWater = 0;
 bool btn = false;
 bool lastbtn = false;
 bool usebtn = false;
+bool btn2 = false;
+bool btn3 = false;
+std::string displayButtons;
+std::string displaySensors;
 
 bool noWater = false;
 bool lastnoWater = false;
 bool usenoWater = false;
+int tankLevel=0;
 
 float WaterCost = 1.5;
 int PulsePerLiter = 784;
@@ -52,13 +57,22 @@ extern std::string displayCoinCounter;
 extern std::string displayWaterCounter;
 int action=0;
 bool gui_thanks=false;
+bool maintenanceMode=false;
+bool remote_controlMode=false;
+extern bool relayPump;
+bool relayFiltration=false;
+bool solenoidLockOut=false;
 
 #define minWaterPin         25
 #define midWaterPin         24
 #define maxWaterPin         23
 
 #define btnPin              103
-//#define btnPin              9
+#define btn2Pin             102
+#define btn3Pin             101
+#define sensExt1Pin         115
+#define sensExt2Pin         114
+#define sensExt3Pin         113
 
 #define relayFiltrationPin  106
 #define relayPumpPin        107

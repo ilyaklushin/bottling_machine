@@ -154,6 +154,7 @@ void db_send(){
                     sleep(5);
                 }
                 if (jrarr["auth"]==true){
+                    last_keepalive = jrarr["status"];
                     if (jrarr["status"]==true){
                         std::cout << "HTTPS ok" << std::endl;
                         db_query((char *)db_name.c_str(), std::string("DELETE FROM HISTORY LIMIT 1"), NULL, 0);
@@ -164,7 +165,7 @@ void db_send(){
                     }
                     break;
                 }
-                else { sleep(5);}
+                else { last_keepalive=false; sleep(5);}
             }
             std::cout << "Hello world!" << std::endl;
         }
@@ -181,6 +182,7 @@ void db_send(){
                 sleep(5);
             }
             if (jrarr["auth"]==true){
+                last_keepalive = jrarr["status"];
                 if (jrarr["status"]==true){
                     std::cout << "HTTPS ok" << std::endl;
                 }
@@ -189,6 +191,7 @@ void db_send(){
                     fetch_cron( -1 , NULL);
                 }
             }
+            else {last_keepalive=false;}
             break;
         }
     }

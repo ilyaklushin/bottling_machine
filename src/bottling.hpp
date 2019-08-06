@@ -9,6 +9,7 @@
  long int sessionWaterCount = 0;
  long int sessionTimeStart = 0;
  bool spill = false;
+ bool relayPump = false;
 
 std::string displayCoinCounter;
 std::string displayWaterCounter;

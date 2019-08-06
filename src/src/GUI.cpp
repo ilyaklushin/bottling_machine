@@ -5,7 +5,7 @@ using namespace std;
 GUI::GUI(int *_state, string *_liter, string *_money,
          int *_tankLevel, bool *_max, bool *_mid, bool *_min, int *_in, int *_out,
          bool *_pumpRelay, bool *_filtrationRelay, bool *_cleaningRelay, bool *_heatingRelay, bool *_solenoidLock, bool *_coinValidatorPwr,
-         float *_temperature, float *_coins, float *_waterCounter, string *_buttons, string *_sensorsExt, int *_rangingMod, bool *_watchDog, bool *_lastKeepalive, int *_machineId,
+         float *_temperature, volatile float *_coins, float *_waterCounter, string *_buttons, string *_sensorsExt, int *_rangingMod, bool *_watchDog, bool *_lastKeepalive, int *_machineId,
          int font_size,
          string fontFamily)
 {
@@ -24,7 +24,7 @@ GUI::GUI(int *_state, string *_liter, string *_money,
     auto display = get_display();
     auto window = get_window();
     display->get_default_seat()->grab(window, Gdk::SEAT_CAPABILITY_ALL, true);
-    
+
     auto image_nowater = new Gtk::Image("NoWater.png");
 
     Pango::FontDescription *font_desc = new Pango::FontDescription();
