@@ -53,6 +53,9 @@ extern std::string displayWaterCounter;
 int action=0;
 bool gui_thanks=false;
 
+unsigned int db_send_delay=30; //delay in seconds
+
+
 #define minWaterPin         25
 #define midWaterPin         24
 #define maxWaterPin         23

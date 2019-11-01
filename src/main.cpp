@@ -146,7 +146,7 @@ void filtration (){
 void toserver (){
     for (;;){
         db_send();
-        sleep(5);
+        sleep(db_send_delay);
     }
 }
 

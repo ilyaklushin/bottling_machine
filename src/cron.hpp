@@ -11,6 +11,7 @@ bool renew_cron=false;
 extern int write_config();
 extern void addCoins(float coins);
 extern void openSolenoidLock();
+extern unsigned int db_send_delay;
 
 #include "cron.cpp"
 

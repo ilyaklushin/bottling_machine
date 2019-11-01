@@ -12,7 +12,7 @@ GUI::GUI(int *_state, string *_liter, string *_money, int font_size, string font
     Glib::signal_timeout().connect(slot_update, timeout_value);
 
     set_default_size(480, 320);
-    //fullscreen();
+    fullscreen();
     set_position(Gtk::WIN_POS_CENTER);
 
     //set_events(Gdk::EXPOSURE_MASK | Gdk::POINTER_MOTION_MASK | Gdk::POINTER_MOTION_HINT_MASK | Gdk::BUTTON_MOTION_MASK | Gdk::BUTTON1_MOTION_MASK | Gdk::BUTTON2_MOTION_MASK | Gdk::BUTTON3_MOTION_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK | Gdk::KEY_PRESS_MASK | Gdk::KEY_RELEASE_MASK | Gdk::ENTER_NOTIFY_MASK | Gdk::FOCUS_CHANGE_MASK | Gdk::STRUCTURE_MASK | Gdk::PROPERTY_CHANGE_MASK | Gdk::VISIBILITY_NOTIFY_MASK | Gdk::PROXIMITY_IN_MASK | Gdk::PROXIMITY_OUT_MASK | Gdk::SUBSTRUCTURE_MASK | Gdk::SCROLL_MASK | Gdk::TOUCH_MASK | Gdk::SMOOTH_SCROLL_MASK | Gdk::TOUCHPAD_GESTURE_MASK);
