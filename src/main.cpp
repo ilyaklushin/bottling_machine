@@ -162,11 +162,11 @@ void run_gui(int *_state, string *_liter, string *_money, int *_tankLevel )
   int in = 25;
   int out = 250;
 
-  bool cleaningRelay = true;
+  bool cleaningRelay = false;
   bool heatingRelay = false;
   bool *coinValidatorPwr = &minWater;
   float temperature = 21.5;
-  float WaterCounterRate = 60.0;
+  float WaterCounterRate = 00.0;
   int rangingMod = 10;
   bool watchDog = true;
 
@@ -178,7 +178,7 @@ void run_gui(int *_state, string *_liter, string *_money, int *_tankLevel )
 
 void chst_gui(){
     for(;;){
-        while(botling==true || gui_thanks==true){
+        while((botling==true || gui_thanks==true) && maintenanceMode==false){
             if(gui_thanks==true){
                 action=2;
                 delay(5000);
@@ -188,7 +188,7 @@ void chst_gui(){
             else{action=1;}
             delay(50);
         }
-        if(noWater==true){action=3;}
+        if(noWater==true && maintenanceMode==false){action=3;}
         else if (maintenanceMode==true){action=4;}
         else{action=0;}
         delay(50);
