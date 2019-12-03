@@ -64,6 +64,9 @@ bool relayFiltration=false;
 bool solenoidLockOut=false;
 extern long int sessionTimer;
 
+unsigned int db_send_delay=30; //delay in seconds
+
+
 #define minWaterPin         25
 #define midWaterPin         24
 #define maxWaterPin         23
