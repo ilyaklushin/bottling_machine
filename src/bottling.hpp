@@ -8,6 +8,7 @@
  long int targetWaterCount = 0;
  long int sessionWaterCount = 0;
  long int sessionTimeStart = 0;
+ long int sessionTimer = 0;
  bool spill = false;
  bool relayPump = false;
 

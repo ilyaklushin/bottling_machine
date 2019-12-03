@@ -13,6 +13,7 @@
       targetWaterCount=0;
       inputCoinCounter=0;
       sessioninputCoinCounter=0;
+      sessionTimer=0;
       botling=false;
       lastbotling=false;
 }
@@ -20,7 +21,11 @@
 void bottling(){
     while (inputCoinCounter > 0 && usenoWater==false){
         botling = true;
-        if (lastbotling==false){ sessionTimeStart=std::time(nullptr); lastbotling=true;}
+        if (lastbotling==false){
+            sessionTimeStart=std::time(nullptr);
+            sessionTimer=0;
+            lastbotling=true;
+            }
         outputWaterCounter = 0;
         std::stringstream displayCoinCounter_stream;
         displayCoinCounter_stream << std::fixed << std::setprecision(0) << inputCoinCounter;
@@ -31,6 +36,7 @@ void bottling(){
         while (usebtn==true && targetWaterCount > 0.01*(PulsePerLiter/WaterCost)){
             std::cout << "outputWaterCounter " << outputWaterCounter << " targetWaterCount " << targetWaterCount << " sessionWaterCount " << sessionWaterCount << " inputCoinCounter " << inputCoinCounter << std::endl;
             spill=true;
+            sessionTimer=0;
             if (inputCoinCounter<targetWaterCount){
                 relayPump=true;
                 digitalWrite(relayPumpPin, 1);
@@ -52,9 +58,13 @@ void bottling(){
             delay(50);
         }
         digitalWrite(relayPumpPin, 0);
+        if ((sessionTimer/1000) > 180){
+            bottling_reset();
+        }
         if (targetWaterCount < 0.25*(PulsePerLiter/WaterCost) && spill==true){
             bottling_reset();
         }
+        sessionTimer+=50;
         delay(50);
 
     }

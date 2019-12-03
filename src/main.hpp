@@ -62,6 +62,7 @@ bool remote_controlMode=false;
 extern bool relayPump;
 bool relayFiltration=false;
 bool solenoidLockOut=false;
+extern long int sessionTimer;
 
 #define minWaterPin         25
 #define midWaterPin         24

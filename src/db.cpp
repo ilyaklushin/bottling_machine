@@ -150,7 +150,7 @@ void db_send(){
                     jrarr = json::parse(curlbuff);
                     std::cout << jrarr << std::endl;
                 } catch(json::parse_error){
-                    std::cout << "HTTPS err:" << curlbuff << std::endl;
+                    std::cout << "HTTPS parse err:" << curlbuff << std::endl;
                     sleep(5);
                 }
                 if (jrarr["auth"]==true){

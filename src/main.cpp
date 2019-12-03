@@ -127,7 +127,7 @@ void renew(){
         btn3=!digitalRead(btn3Pin);
         displayButtons = std::to_string(btn) + std::to_string(btn2) + std::to_string(btn3);
         displaySensors = std::to_string(digitalRead(sensExt1Pin)) + std::to_string(digitalRead(sensExt2Pin)) + std::to_string(digitalRead(sensExt3Pin));
-        std::cout << "dispW: " << displayWaterCounter << "dispC:" << displayCoinCounter << "Btn:" << digitalRead(btnPin) << endl;
+        std::cout << "dispW: " << displayWaterCounter << "dispC:" << displayCoinCounter << "Btn:" << digitalRead(btnPin) << "sTr:"<< sessionTimer << endl;
         delay(250);
         //db_bottling_add(1, 2);
     }
