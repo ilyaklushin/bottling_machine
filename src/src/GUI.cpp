@@ -17,6 +17,7 @@ GUI::GUI(int *_state, string *_liter, string *_money,
     Glib::signal_timeout().connect(slot_update, timeout_value);
 
     set_default_size(480, 320);
+    fullscreen();
     set_position(Gtk::WIN_POS_CENTER);
 
     set_events(Gdk::ALL_EVENTS_MASK);
