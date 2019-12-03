@@ -68,17 +68,12 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/GUI.h" />
-		<Unit filename="include/box_run.h" />
 		<Unit filename="include/cMaintenance.h" />
 		<Unit filename="include/cRun.h" />
 		<Unit filename="include/cStandby.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main.hpp" />
 		<Unit filename="src/GUI.cpp">
-			<Option compile="0" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="src/box_run.cpp">
 			<Option compile="0" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
