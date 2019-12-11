@@ -9,7 +9,7 @@ using namespace libconfig;
 auto read_config(){
     Config cfg;
     try{
-        cfg.readFile("bottling_machine.cfg");
+        cfg.readFile("machine.cfg");
     }
     catch(const FileIOException &fioex){
         std::cerr << "I/O error while reading file." << std::endl;
@@ -67,7 +67,7 @@ auto read_config(){
 int write_config(){
     Config cfg;
     try{
-        cfg.readFile("bottling_machine.cfg");
+        cfg.readFile("machine.cfg");
     }
     catch(const FileIOException &fioex){
         std::cerr << "I/O error while reading file." << std::endl;
@@ -92,7 +92,7 @@ int write_config(){
         l_api_address = api_address;
         l_db_name = db_name;
 
-        cfg.writeFile("bottling_machine.cfg");
+        cfg.writeFile("machine.cfg");
         return 1;
     }
     catch(const SettingNotFoundException &nfex){

@@ -10,6 +10,7 @@
       db_add_bottling(float(sessionWaterCount)/PulsePerLiter, sessioninputCoinCounter, sessionTimeStop-sessionTimeStart, sessionTimeStop);
       spill=false;
       usebtn=false;
+      sessionWaterCount=0;
       targetWaterCount=0;
       inputCoinCounter=0;
       sessioninputCoinCounter=0;

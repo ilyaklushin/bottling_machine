@@ -1,6 +1,6 @@
 machine_id = 427;
 auth_key = "test";
 water_cost = 1.5;
-pulse_per_liter = 784;
+pulse_per_liter = 914;
 api_address = "https://water.ufmc.xyz/test.php";
 db_name = "test.db";

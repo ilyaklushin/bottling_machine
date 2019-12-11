@@ -1,3 +1,5 @@
 src/obj/*
 src/main_v3.layout
+src/machine.cfg
+src/machine.db
 
