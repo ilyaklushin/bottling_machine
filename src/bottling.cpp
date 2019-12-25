@@ -20,6 +20,7 @@
 }
 
 void bottling(){
+    usebtn=false;
     while (inputCoinCounter > 0 && usenoWater==false){
         botling = true;
         if (lastbotling==false){
