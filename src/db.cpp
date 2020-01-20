@@ -69,6 +69,20 @@ void db_add_filtration(bool minS, bool midS, bool maxS){
     db_query((char *)db_name.c_str(), db_execstr, NULL, 0);
 }
 
+void db_add_sensors(int phSensor, float in_flow, float tank_flow, float in_pressure, float membrane_pressure){
+    json jarr;
+    jarr["phsensor"] = phSensor;
+    jarr["in_flow"] =  in_flow;
+    jarr["tank_flow"] = tank_flow;
+    jarr["in_pressure"] = in_pressure;
+    jarr["membrane_pressure"] = membrane_pressure;
+    jarr["time"] = std::time(nullptr);
+
+    std::string db_execstr;
+    db_execstr = "INSERT INTO HISTORY (action,data) VALUES ('sensors', '"+ jarr.dump() +"');";
+    db_query((char *)db_name.c_str(), db_execstr, NULL, 0);
+}
+
 size_t db_send_post_writeFunction(void *ptr, size_t size, size_t nmemb, std::string* data){
     data->append((char*) ptr, size * nmemb);
     return size * nmemb;

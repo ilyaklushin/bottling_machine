@@ -156,6 +156,23 @@ void toserver (){
     }
 }
 
+void sensors_refresh(){
+    for (;;){
+        phSensor0_avg=wiringPiI2CReadReg16(i2c_slave0, 'A');
+        int16_t Sensor1_avg=wiringPiI2CReadReg16(i2c_slave0, 'B');
+        int16_t Sensor2_avg=wiringPiI2CReadReg16(i2c_slave0, 'C');
+        int16_t Counter0_avg=wiringPiI2CReadReg16(i2c_slave0, 'J');
+        int16_t Counter1_avg=wiringPiI2CReadReg16(i2c_slave0, 'K');
+        in_flow_avg=Counter0_avg/784;
+        tank_flow_avg=Counter1_avg/784;
+        in_pressure_avg=((3.0*((float)((Sensor1_avg*5.0)/1024.0)-0.500))*1000000.0)/10e5;
+        membrane_pressure_avg=((3.0*((float)((Sensor2_avg*5.0)/1024.0)-0.500))*1000000.0)/10e5;
+        db_add_sensors(phSensor0_avg, in_flow_avg, tank_flow_avg, in_pressure_avg, membrane_pressure_avg);
+        std::cout << "I2CREG " << Sensor1_avg << " " << Sensor2_avg << " " << Counter0_avg << " " << Counter1_avg << " " << std::endl;
+        sleep(60);
+    }
+}
+
 void run_gui(int *_state, string *_liter, string *_money, int *_tankLevel )
 {
     Glib::RefPtr<Gtk::Application> app = Gtk::Application::create("com.watermachine.gui");
@@ -246,9 +263,12 @@ int main(int argc, char* argv[]){
     pullUpDnControl (outWaterCounterPin, PUD_DOWN);
     wiringPiISR ( outWaterCounterPin, INT_EDGE_BOTH, outWaterCounter);
 
+    i2c_slave0 = wiringPiI2CSetup(0x05);
+
     std::cout << "OK" << std::endl;
     std::thread trenew(renew);
     std::thread ttoserver(toserver);
+    std::thread tsensors(sensors_refresh);
 
     std::thread trun_gui(run_gui, &action, &displayWaterCounter, &displayCoinCounter, &tankLevel);
     std::thread tchst_gui(chst_gui);
@@ -260,9 +280,9 @@ int main(int argc, char* argv[]){
         std::thread tfiltration(filtration);
         std::thread tbottling(bottling);
 
-        std::cout << "Sen " << digitalRead(minWaterPin) << digitalRead(midWaterPin) << digitalRead(maxWaterPin) << std::endl;
+        //std::cout << "Sen " << digitalRead(minWaterPin) << digitalRead(midWaterPin) << digitalRead(maxWaterPin) << std::endl;
         //std::cout << "inCoin " << inputCoinCounter << std::endl;
-        std::cout << "outWater " << outputWaterCounter << "lastnoWater " << lastnoWater << "noWater " << noWater << std::endl;
+        //std::cout << "outWater " << outputWaterCounter << "lastnoWater " << lastnoWater << "noWater " << noWater << std::endl;
         //std::cout << "btn " << btn << " lastbtn " << lastbtn << " usebtn " << usebtn << std::endl;
         //std::time_t timer;
         //std::time(&timer);

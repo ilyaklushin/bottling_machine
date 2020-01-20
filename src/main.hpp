@@ -7,6 +7,7 @@
 #include <libconfig.h++> // Library for processing configuration files
 #include <wiringPi.h>  // Wiring Library for Raspberry Pi
 #include <mcp23017.h>  // MCP23017 I2C GPIO Externder library
+#include <wiringPiI2C.h> //WiringPi I2C functionality
 #include "coincounter.hpp"
 #include "bottling.hpp"
 
@@ -29,6 +30,7 @@ int machine_id = 0;
 std::string auth_key = "";
 std::string api_address = "";
 std::string db_name;
+int i2c_slave0;
 
 
 bool minWater = false;
@@ -65,6 +67,12 @@ bool solenoidLockOut=false;
 extern long int sessionTimer;
 
 unsigned int db_send_delay=30; //delay in seconds
+
+int phSensor0_avg=0;
+float in_flow_avg=0.00;
+float tank_flow_avg=0.00;
+float in_pressure_avg=0.00;
+float membrane_pressure_avg=0.00;
 
 
 #define minWaterPin         25
