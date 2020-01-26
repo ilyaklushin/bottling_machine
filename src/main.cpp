@@ -1,4 +1,5 @@
 #include "main.hpp"
+#include "wiringPiM.hpp"
 #include "db.hpp"
 #include "cron.hpp"
 #include "coincounter.cpp"
@@ -103,10 +104,10 @@ int write_config(){
 
 void openSolenoidLock(){
     solenoidLockOut=true;
-    digitalWrite(solenoidLockPin, 1);
+    digitalWriteM(solenoidLockPin, 1);
     sleep(5);
     solenoidLockOut=false;
-    digitalWrite(solenoidLockPin, 0);
+    digitalWriteM(solenoidLockPin, 0);
 }
 
 void noWaterWait(){
@@ -117,17 +118,17 @@ void noWaterWait(){
 
 void renew(){
     for (;;){
-        minWater=digitalRead(minWaterPin);
-        midWater=digitalRead(midWaterPin);
-        maxWater=digitalRead(maxWaterPin);
-        btn=!digitalRead(btnPin);
+        minWater=digitalReadM(minWaterPin);
+        midWater=digitalReadM(midWaterPin);
+        maxWater=digitalReadM(maxWaterPin);
+        btn=!digitalReadM(btnPin);
         if(lastbtn!=btn && btn == true) {usebtn=!usebtn;}
         lastbtn=btn;
-        btn2=!digitalRead(btn2Pin);
-        btn3=!digitalRead(btn3Pin);
+        btn2=!digitalReadM(btn2Pin);
+        btn3=!digitalReadM(btn3Pin);
         displayButtons = std::to_string(btn) + std::to_string(btn2) + std::to_string(btn3);
-        displaySensors = std::to_string(digitalRead(sensExt1Pin)) + std::to_string(digitalRead(sensExt2Pin)) + std::to_string(digitalRead(sensExt3Pin));
-        std::cout << "dispW: " << displayWaterCounter << "dispC:" << displayCoinCounter << "Btn:" << digitalRead(btnPin) << "sTr:"<< sessionTimer << endl;
+        displaySensors = std::to_string(digitalReadM(sensExt1Pin)) + std::to_string(digitalReadM(sensExt2Pin)) + std::to_string(digitalReadM(sensExt3Pin));
+        //std::cout << "dispW: " << displayWaterCounter << "dispC:" << displayCoinCounter << "Btn:" << digitalReadM(btnPin) << "sTr:"<< sessionTimer << endl;
         delay(250);
         //db_bottling_add(1, 2);
     }
@@ -135,13 +136,13 @@ void renew(){
 
 void filtration (){
     sensWater=0;
-    digitalWrite(CoinCounterPwrPin, minWater);
+    digitalWriteM(CoinCounterPwrPin, minWater);
     if (minWater==true or botling==true) {noWater=false; noWaterWait();}
     else {noWater=true;}
     if (minWater==true){sensWater+=100;}
-    if (midWater==false) {digitalWrite(relayFiltrationPin, 1); relayFiltration=true;}
+    if (midWater==false) {digitalWriteM(relayFiltrationPin, 1); relayFiltration=true;}
     else {sensWater+=10;}
-    if (maxWater==true) {digitalWrite(relayFiltrationPin, 0); sensWater+=1; relayFiltration=false;}
+    if (maxWater==true) {digitalWriteM(relayFiltrationPin, 0); sensWater+=1; relayFiltration=false;}
     if (sensWater!=lastsensWater){
         db_add_filtration(minWater, midWater, maxWater);
     }
@@ -158,11 +159,11 @@ void toserver (){
 
 void sensors_refresh(){
     for (;;){
-        phSensor0_avg=wiringPiI2CReadReg16(i2c_slave0, 'A');
-        int16_t Sensor1_avg=wiringPiI2CReadReg16(i2c_slave0, 'B');
-        int16_t Sensor2_avg=wiringPiI2CReadReg16(i2c_slave0, 'C');
-        int16_t Counter0_avg=wiringPiI2CReadReg16(i2c_slave0, 'J');
-        int16_t Counter1_avg=wiringPiI2CReadReg16(i2c_slave0, 'K');
+        phSensor0_avg=wiringPiI2CReadReg16M(i2c_slave0, 'A');
+        int16_t Sensor1_avg=wiringPiI2CReadReg16M(i2c_slave0, 'B');
+        int16_t Sensor2_avg=wiringPiI2CReadReg16M(i2c_slave0, 'C');
+        int16_t Counter0_avg=wiringPiI2CReadReg16M(i2c_slave0, 'J');
+        int16_t Counter1_avg=wiringPiI2CReadReg16M(i2c_slave0, 'K');
         in_flow_avg=Counter0_avg/784;
         tank_flow_avg=Counter1_avg/784;
         in_pressure_avg=((3.0*((float)((Sensor1_avg*5.0)/1024.0)-0.500))*1000000.0)/10e5;
@@ -215,7 +216,7 @@ void chst_gui(){
 void watchdog(){
     for(;;){
     delay(5);
-    digitalWrite(watchdogTxPin, digitalRead(watchdogRxPin));
+    digitalWriteM(watchdogTxPin, digitalReadM(watchdogRxPin));
     }
 }
 
@@ -280,7 +281,7 @@ int main(int argc, char* argv[]){
         std::thread tfiltration(filtration);
         std::thread tbottling(bottling);
 
-        //std::cout << "Sen " << digitalRead(minWaterPin) << digitalRead(midWaterPin) << digitalRead(maxWaterPin) << std::endl;
+        //std::cout << "Sen " << digitalReadM(minWaterPin) << digitalReadM(midWaterPin) << digitalReadM(maxWaterPin) << std::endl;
         //std::cout << "inCoin " << inputCoinCounter << std::endl;
         //std::cout << "outWater " << outputWaterCounter << "lastnoWater " << lastnoWater << "noWater " << noWater << std::endl;
         //std::cout << "btn " << btn << " lastbtn " << lastbtn << " usebtn " << usebtn << std::endl;

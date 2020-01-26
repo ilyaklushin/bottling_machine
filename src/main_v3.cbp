@@ -89,6 +89,11 @@
 			<Option compile="0" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="wiringPiM.cpp">
+			<Option compile="0" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="wiringPiM.hpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

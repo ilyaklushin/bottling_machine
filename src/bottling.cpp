@@ -41,7 +41,7 @@ void bottling(){
             sessionTimer=0;
             if (inputCoinCounter<targetWaterCount){
                 relayPump=true;
-                digitalWrite(relayPumpPin, 1);
+                digitalWriteM(relayPumpPin, 1);
             }
             else{
                 bottling_reset();
@@ -59,7 +59,7 @@ void bottling(){
             outputWaterCounter=0;
             delay(50);
         }
-        digitalWrite(relayPumpPin, 0);
+        digitalWriteM(relayPumpPin, 0);
         if ((sessionTimer/1000) > 180){
             bottling_reset();
         }
