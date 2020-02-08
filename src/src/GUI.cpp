@@ -9,6 +9,7 @@ GUI::GUI(int *_state, string *_liter, string *_money,
          int font_size,
          string fontFamily)
 {
+    // init params
     state = _state;
     laststate = -1;
 
@@ -16,6 +17,7 @@ GUI::GUI(int *_state, string *_liter, string *_money,
     sigc::slot<bool> slot_update = sigc::mem_fun(*this, &GUI::update);
     Glib::signal_timeout().connect(slot_update, timeout_value);
 
+    // set window parameters
     set_default_size(480, 320);
     fullscreen();
     set_position(Gtk::WIN_POS_CENTER);
@@ -26,7 +28,12 @@ GUI::GUI(int *_state, string *_liter, string *_money,
     auto window = get_window();
     display->get_default_seat()->grab(window, Gdk::SEAT_CAPABILITY_ALL, true);
 
-    auto image_nowater = new Gtk::Image("NoWater.png");
+    // load css
+    auto *cssProvider = gtk_css_provider_new();
+    gtk_css_provider_load_from_path(cssProvider, "./style.css", NULL);
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    auto image_nowater = new Gtk::Image("./NoWater.png");
 
     Pango::FontDescription *font_desc = new Pango::FontDescription();
     font_desc->set_family(fontFamily);
