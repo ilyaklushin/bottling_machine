@@ -12,7 +12,7 @@ cRun::cRun(string *_liters, string *_money, Pango::FontDescription *font_desc)
     lLiters = new Gtk::Label();
     lLiters->override_font(*font_desc);
     lLiters->set_xalign(1);
-    lLiters->set_margin_right(35);
+    // lLiters->set_margin_right(35);
 
     Gtk::Label *ltMoney = new Gtk::Label("На счету:");
     ltMoney->set_xalign(0);
